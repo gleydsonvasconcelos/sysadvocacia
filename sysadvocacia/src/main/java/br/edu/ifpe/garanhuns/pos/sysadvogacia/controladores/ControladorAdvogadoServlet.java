@@ -5,8 +5,8 @@
  */
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.controladores;
 
-import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Cliente;
-import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioCliente;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Advogado;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioAdvogado;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +20,8 @@ import com.google.gson.JsonObject;
  *
  * @author Gleydson
  */
-@WebServlet(name = "ControladorClienteServlet", urlPatterns = {"/SalvarCliente", "/ListarClientes", "/RemoverCliente"})
-public class ControladorServlet extends HttpServlet {
+@WebServlet(name = "ControladorAdvogadoServlet", urlPatterns = {"/SalvarAdvogado", "/ListarAdvogados", "/RemoverAdvogado"})
+public class ControladorAdvogadoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,35 +40,36 @@ public class ControladorServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String userPath = request.getServletPath();
-        NegocioCliente negocioCliente = new NegocioCliente();
-        Cliente cliente;
+        NegocioAdvogado negocioAdvogado = new NegocioAdvogado();
+        Advogado advogado;
 
-        if (userPath.equals("/SalvarCliente")) {
-            cliente = new Cliente();
+        if (userPath.equals("/SalvarAdvogado")) {
+            advogado = new Advogado();
             if (!request.getParameter("codigo").isEmpty()) {
-                cliente.setCodigo(Integer.parseInt(request.getParameter("codigo")));
+                advogado.setCodigo(Integer.parseInt(request.getParameter("codigo")));
             } else {
-                cliente.setCodigo(0);
+                advogado.setCodigo(0);
             }
-            cliente.setNome(request.getParameter("nome"));
-            cliente.setCpfCnpj(request.getParameter("cpfCnpj"));
-            cliente.setEndereco(request.getParameter("endereco"));
-            cliente.setTelefone(request.getParameter("telefone"));
+            advogado.setNome(request.getParameter("nome"));
+            advogado.setCpf(request.getParameter("cpf"));
+            advogado.setOab(request.getParameter("oab"));
+            advogado.setEndereco(request.getParameter("endereco"));
+            advogado.setTelefone(request.getParameter("telefone"));
 
-            String json = new Gson().toJson(negocioCliente.salvar(cliente));
+            String json = new Gson().toJson(negocioAdvogado.salvar(advogado));
             response.getWriter().print(json);
 
         }
 
-        if (userPath.equals("/ListarClientes")) {
-            String json = new Gson().toJson(negocioCliente.listarClientes());
+        if (userPath.equals("/ListarAdvogados")) {
+            String json = new Gson().toJson(negocioAdvogado.listarAdvogados());
             response.getWriter().print(json);
         }
 
-        if (userPath.equals("/RemoverCliente")) {
+        if (userPath.equals("/RemoverAdvogado")) {
             String id = request.getParameter("id");
-            cliente = negocioCliente.clientePorCodigo(Integer.parseInt(id));
-            negocioCliente.remover(cliente);
+            advogado = negocioAdvogado.advogadoPorCodigo(Integer.parseInt(id));
+            negocioAdvogado.remover(advogado);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("success", "true");
             response.getWriter().print(new Gson().toJson(jsonObject));
