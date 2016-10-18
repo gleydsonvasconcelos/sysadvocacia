@@ -6,6 +6,7 @@
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio;
 
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Cliente;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.excecoes.RemoverClienteComProcessosException;
 import br.edu.ifpe.pos.garanhuns.sysadvogacia.persistencia.ClienteDAO;
 import java.util.List;
 
@@ -25,7 +26,10 @@ public class NegocioCliente {
         return repositorioClientes.save(cliente);
     }
     
-    public void remover(Cliente cliente){
+    public void remover (Cliente cliente) throws RemoverClienteComProcessosException{
+        if(cliente.getProcessoList().size()>0){
+            throw new RemoverClienteComProcessosException(cliente);
+        }
         repositorioClientes.remove(cliente);
     }
     

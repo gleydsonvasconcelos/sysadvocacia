@@ -6,6 +6,7 @@
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.controladores;
 
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Cliente;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.excecoes.RemoverClienteComProcessosException;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioCliente;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -66,12 +67,18 @@ public class ControladorClienteServlet extends HttpServlet {
         }
 
         if (userPath.equals("/RemoverCliente")) {
-            String id = request.getParameter("id");
-            cliente = negocioCliente.clientePorCodigo(Integer.parseInt(id));
-            negocioCliente.remover(cliente);
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("success", "true");
-            response.getWriter().print(new Gson().toJson(jsonObject));
+            try {
+                String id = request.getParameter("id");
+                cliente = negocioCliente.clientePorCodigo(Integer.parseInt(id));
+                negocioCliente.remover(cliente);
+                jsonObject.addProperty("success", "true");
+                response.getWriter().print(new Gson().toJson(jsonObject));
+            } catch (RemoverClienteComProcessosException e) {
+                jsonObject.addProperty("errorMsg", e.mensagem());
+                response.getWriter().print(new Gson().toJson(jsonObject));
+            }
+
         }
 
     }
