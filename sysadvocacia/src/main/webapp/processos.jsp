@@ -16,7 +16,10 @@
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
         <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
     </head>
@@ -30,7 +33,11 @@
             <thead>
                 <tr>
                     <th field="codigo" width="50">Código</th>
-                    <th field="dataAbertura" width="100">Data de Abertura</th>
+                    <th field="descricao" width="150">Código</th>
+                    <th field="dataAbertura" width="50" formatter="formatDate">Data de Abertura</th>
+                    <th field="instanciaAtual" width="100">Instância Atual</th>
+                    <th field="status" width="30">Status</th>
+
                 </tr>
             </thead>
         </table>
@@ -47,8 +54,26 @@
                 <input type="hidden" name="codigo"/>
                 <div class="fitem">
                     <label>Data de Abertura:</label>
-                    <input name="dataAbertura" id="datepicker" class="easyui-textbox" required="true">
+                    <input name="dataAbertura" class="easyui-datebox" formatter="formatDate" required="true">
                 </div>
+                <div class="fitem">
+                    <label>Descrição:</label>
+                    <input name="descricao" class="easyui-textbox">
+                </div>
+
+                <div class="fitem">
+                    <label>Instancia Atual:</label>
+                    <input name="instanciaAtual" class="easyui-textbox" required="true">
+                </div>
+                <div class="fitem">
+                    <label>Status:</label>
+                    <input name="status" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>Decisao Final:</label>
+                    <input name="decisaoFinal" class="easyui-textbox">
+                </div>
+
             </form>
         </div>
         <div id="dlg-buttons">
@@ -58,10 +83,17 @@
 
         <script type="text/javascript">
             var url;
+
+            
+            function formatDate(value, row) {
+                var d = new Date(value);
+                return $.fn.datebox.defaults.formatter(d);
+            }
+
+
             function newUser() {
                 $('#dlg').dialog('open').dialog('setTitle', 'Novo Processo');
                 $('#fm').form('clear');
-                $( "#datepicker" ).datepicker();
                 url = 'SalvarProcesso';
             }
             function editUser() {
@@ -69,7 +101,6 @@
                 if (row) {
                     $('#dlg').dialog('open').dialog('setTitle', 'Alterar Processo');
                     $('#fm').form('load', row);
-                    $( "#datepicker" ).datepicker();
                     url = 'SalvarProcesso';
                 }
             }
