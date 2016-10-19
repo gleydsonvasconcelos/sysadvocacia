@@ -54,7 +54,7 @@ public class ControladorProcessoServlet extends HttpServlet {
             processo.setInstanciaAtual(request.getParameter("instanciaAtual"));
             processo.setStatus(Integer.parseInt(request.getParameter("status")));
             processo.setDecisaoFinal(request.getParameter("decisaoFinal"));
-            processo.setDecisaoFinal(request.getParameter("decisaoFinal"));
+            processo.setDescricao(request.getParameter("descricao"));
 
             String json = new Gson().toJson(negocioProcesso.salvar(processo));
             response.getWriter().print(json);

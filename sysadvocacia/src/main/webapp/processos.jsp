@@ -33,7 +33,7 @@
             <thead>
                 <tr>
                     <th field="codigo" width="50">Código</th>
-                    <th field="descricao" width="150">Código</th>
+                    <th field="descricao" width="150">Descrição</th>
                     <th field="dataAbertura" width="50" formatter="formatDate">Data de Abertura</th>
                     <th field="instanciaAtual" width="100">Instância Atual</th>
                     <th field="status" width="30">Status</th>
