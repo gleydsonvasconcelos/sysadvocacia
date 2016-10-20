@@ -21,11 +21,22 @@ import java.util.Date;
  *
  * @author Gleydson
  */
-@WebServlet(name = "ControladorProcessoServlet", urlPatterns = {"/SalvarProcesso", "/ListarProcessos", "/RemoverProcesso"})
+@WebServlet(name = "ControladorProcessoServlet", urlPatterns = {"/SalvarProcesso", "/ListarProcessos", "/RemoverProcesso", "/ListarClientesProcesso"})
 public class ControladorProcessoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String userPath = request.getServletPath();
+        NegocioProcesso negocioProcesso = new NegocioProcesso();
+        Processo processo;
+
+        if (userPath.equals("/ListarClientesProcesso")) {
+            processo = negocioProcesso.processoPorCodigo(Integer.parseInt(request.getParameter("codigoProcesso")));
+            String json = new Gson().toJson(processo.getClienteList());
+            response.getWriter().print(json);
+        }
+
     }
 
     /**
@@ -48,8 +59,8 @@ public class ControladorProcessoServlet extends HttpServlet {
             processo = new Processo();
             if (!request.getParameter("codigo").isEmpty()) {
                 processo.setCodigo(Integer.parseInt(request.getParameter("codigo")));
-            } 
-            
+            }
+
             processo.setDataAbertura(new Date(request.getParameter("dataAbertura")));
             processo.setInstanciaAtual(request.getParameter("instanciaAtual"));
             processo.setStatus(Integer.parseInt(request.getParameter("status")));
