@@ -6,7 +6,9 @@
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio;
 
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Lei;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Processo;
 import br.edu.ifpe.pos.garanhuns.sysadvogacia.persistencia.LeiDAO;
+import br.edu.ifpe.pos.garanhuns.sysadvogacia.persistencia.ProcessoDAO;
 import java.util.List;
 
 /**
@@ -16,7 +18,7 @@ import java.util.List;
 public class NegocioLei{
     
     private final LeiDAO repositorioLei;
-    
+            
     public  NegocioLei(){
         repositorioLei = new LeiDAO(); 
     }
@@ -35,6 +37,10 @@ public class NegocioLei{
     
     public Lei LeiPorCodigo(){
         return repositorioLei.getById(Integer.SIZE);
-    }    
+    }
+    
+    public Processo ProcessoPorCodigoLei(int codigolei){        
+        return repositorioLei.getById(codigolei).getProcessoCodigo(); 
+    }
         
 }

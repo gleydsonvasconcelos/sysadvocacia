@@ -26,7 +26,7 @@
         <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
     </head>
     <body>
-        <h2>Cadastro de Clientes</h2>
+        <h2>Cadastro de Leis</h2>
         <p>Listar, Cadastrar, Alterar e Remover Leis do Sistema</p>
         <table id="dg" title="Clientes" class="easyui-datagrid" style="width:800px;height:400px"
                url="ListarClientes"
@@ -35,17 +35,18 @@
             <thead>
                 <tr>
                     <th field="codigo" width="50">Código</th>
-                    <th field="nome" width="150">Nome</th>
-                    <th field="cpfCnpj" width="80">CPF/CNPJ</th>
-                    <th field="endereco" width="200">Endereço</th>
-                    <th field="telefone" width="100">Telefone</th>
+                    <th field="descricao" width="150">Descrição</th>
+                    <th field="tipo" width="100">Tipo</th>
+                    <th field="capitulo" width="80">Capitulo</th>
+                    <th field="artigo" width="200">Artigo</th>
+                   
                 </tr>
             </thead>
         </table>
         <div id="toolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">Novo Cliente</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Alterar Cliente</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remover Cliente</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newLaw()">Nova Lei</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editLaw()">Alterar Lei</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyLaw()">Remover Lei</a>
         </div>
 
         <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
@@ -54,44 +55,44 @@
             <form id="fm" method="post"  action="SalvarCliente" novalidate>
                 <input type="hidden" name="codigo"/>
                 <div class="fitem">
-                    <label>Nome:</label>
-                    <input name="nome" class="easyui-textbox" required="true">
+                    <label>Descrição</label>
+                    <input name="descricao" class="easyui-textbox" required="true">
                 </div>
                 <div class="fitem">
-                    <label>CPF/CNPJ:</label>
-                    <input name="cpfCnpj" class="easyui-textbox" required="true">
+                    <label>Tipo</label>
+                    <input name="tipo" class="easyui-textbox" required="true">
                 </div>
                 <div class="fitem">
-                    <label>Endereço:</label>
-                    <input name="endereco" class="easyui-textbox">
+                    <label>Artigo</label>
+                    <input name="artigo" class="easyui-textbox">
                 </div>
                 <div class="fitem">
-                    <label>Telefone</label>
+                    <label>Capitulo</label>
                     <input name="telefone" class="easyui-textbox" >
                 </div>
             </form>
         </div>
         <div id="dlg-buttons">
-            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Salvar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveLaw()" style="width:90px">Salvar</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
         </div>
         
         <script type="text/javascript">
             var url;
-            function newUser() {
-                $('#dlg').dialog('open').dialog('setTitle', 'Novo Cliente');
+            function newLaw() {
+                $('#dlg').dialog('open').dialog('setTitle', 'Nova Lei');
                 $('#fm').form('clear');
-                url = 'SalvarCliente';
+                url = 'SalvarLei';
             }
-            function editUser() {
+            function editLaw() {
                 var row = $('#dg').datagrid('getSelected');
                 if (row) {
-                    $('#dlg').dialog('open').dialog('setTitle', 'Alterar Cliente');
+                    $('#dlg').dialog('open').dialog('setTitle', 'Alterar Lei');
                     $('#fm').form('load', row);
-                    url = 'SalvarCliente';
+                    url = 'SalvarLei';
                 }
             }
-            function saveUser() {
+            function saveLaw() {
                 $('#fm').form('submit', {
                     url: url,
                     onSubmit: function () {
@@ -112,12 +113,12 @@
                 });
             }
             
-            function destroyUser() {
+            function destroyLaw() {
                 var row = $('#dg').datagrid('getSelected');
                 if (row) {
-                    $.messager.confirm('Confirmar', 'Deseja realmente remover este Cliente?', function (r) {
+                    $.messager.confirm('Confirmar', 'Deseja realmente remover esta Lei?', function (r) {
                         if (r) {
-                            $.post('RemoverCliente', {id: row.codigo}, function (result) {
+                            $.post('RemoverLei', {id: row.codigo}, function (result) {
                                 if (result.success) {
                                     $('#dg').datagrid('reload');	// reload the user data
                                 } else {
