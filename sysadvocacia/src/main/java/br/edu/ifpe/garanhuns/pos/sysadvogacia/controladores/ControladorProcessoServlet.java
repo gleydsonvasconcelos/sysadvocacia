@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.Date;
 
 /**
  *
@@ -47,12 +48,14 @@ public class ControladorProcessoServlet extends HttpServlet {
             processo = new Processo();
             if (!request.getParameter("codigo").isEmpty()) {
                 processo.setCodigo(Integer.parseInt(request.getParameter("codigo")));
-            } else {
-                processo.setCodigo(0);
-            }
+            } 
             
-            //Processo.setNome(request.getParameter("nome"));
-            
+            processo.setDataAbertura(new Date(request.getParameter("dataAbertura")));
+            processo.setInstanciaAtual(request.getParameter("instanciaAtual"));
+            processo.setStatus(Integer.parseInt(request.getParameter("status")));
+            processo.setDecisaoFinal(request.getParameter("decisaoFinal"));
+            processo.setDescricao(request.getParameter("descricao"));
+
             String json = new Gson().toJson(negocioProcesso.salvar(processo));
             response.getWriter().print(json);
 
