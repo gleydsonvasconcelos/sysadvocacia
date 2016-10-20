@@ -35,7 +35,7 @@ public class NegocioLei{
         return repositorioLei.getAll();
     }
     
-    public Lei LeiPorCodigo(){
+    public Lei LeiPorCodigo(int codigo){
         return repositorioLei.getById(Integer.SIZE);
     }
     
