@@ -28,7 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "lei")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Lei.findAll", query = "SELECT l FROM Lei l")})
+@NamedQuery(name = "Lei.findAll", query = "SELECT l FROM Lei l")})
+
+
 public class Lei implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,7 +48,7 @@ public class Lei implements Serializable {
     private Integer capitulo;
     @Column(name = "artigo")
     private Integer artigo;
-    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)
+    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = true)
     @ManyToOne(optional = false)
     private Processo processoCodigo;
 
@@ -57,6 +59,7 @@ public class Lei implements Serializable {
         this.codigo = codigo;
     }
 
+    
     public Integer getCodigo() {
         return codigo;
     }
@@ -77,7 +80,7 @@ public class Lei implements Serializable {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(String tipo) {        
         this.tipo = tipo;
     }
 
@@ -100,7 +103,7 @@ public class Lei implements Serializable {
     public Processo getProcessoCodigo() {
         return processoCodigo;
     }
-
+    @Basic
     public void setProcessoCodigo(Processo processoCodigo) {
         this.processoCodigo = processoCodigo;
     }

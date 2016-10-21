@@ -68,7 +68,7 @@
                 </div>
                 <div class="fitem">
                     <label>Capitulo</label>
-                    <input name="telefone" class="easyui-textbox" >
+                    <input name="capitulo" class="easyui-textbox" >
                 </div>
             </form>
         </div>
