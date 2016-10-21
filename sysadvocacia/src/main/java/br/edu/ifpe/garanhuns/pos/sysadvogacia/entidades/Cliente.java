@@ -57,7 +57,7 @@ public class Cliente implements Serializable {
     @JoinTable(name = "processo_has_cliente", joinColumns = {
         @JoinColumn(name = "cliente_codigo", referencedColumnName = "codigo", nullable = false)}, inverseJoinColumns = {
         @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)})
-    @ManyToMany
+    @ManyToMany(mappedBy = "clienteList")
     private List<Processo> processoList;
 
     public Cliente() {

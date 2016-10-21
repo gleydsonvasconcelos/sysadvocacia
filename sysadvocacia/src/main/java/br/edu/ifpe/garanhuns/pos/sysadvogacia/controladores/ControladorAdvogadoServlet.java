@@ -6,7 +6,10 @@
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.controladores;
 
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Advogado;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Processo;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioAdvogado;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 /**
@@ -56,7 +60,31 @@ public class ControladorAdvogadoServlet extends HttpServlet {
             advogado.setEndereco(request.getParameter("endereco"));
             advogado.setTelefone(request.getParameter("telefone"));
 
-            String json = new Gson().toJson(negocioAdvogado.salvar(advogado));
+            Gson gson = new GsonBuilder()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return (clazz == Processo.class);
+                        }
+
+                        /**
+                         * Custom field exclusion goes here
+                         */
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return false;
+                        }
+
+                    })
+                    /**
+                     * Use serializeNulls method if you want To serialize null
+                     * values By default, Gson does not serialize null values
+                     */
+                    .serializeNulls()
+                    .create();
+
+            
+            
+            String json = gson.toJson(negocioAdvogado.salvar(advogado));
             response.getWriter().print(json);
 
         }

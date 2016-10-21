@@ -6,8 +6,11 @@
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.controladores;
 
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Cliente;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Processo;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.excecoes.RemoverClienteComProcessosException;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioCliente;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
 
 /**
  *
@@ -26,8 +31,7 @@ public class ControladorClienteServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
     }
 
     /**
@@ -64,7 +68,29 @@ public class ControladorClienteServlet extends HttpServlet {
         }
 
         if (userPath.equals("/ListarClientes")) {
-            String json = new Gson().toJson(negocioCliente.listarClientes());
+            Gson gson = new GsonBuilder()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return (clazz == Processo.class);
+                        }
+
+                        /**
+                         * Custom field exclusion goes here
+                         */
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return false;
+                        }
+
+                    })
+                    /**
+                     * Use serializeNulls method if you want To serialize null
+                     * values By default, Gson does not serialize null values
+                     */
+                    .serializeNulls()
+                    .create();
+
+            String json = gson.toJson(negocioCliente.listarClientes());
             response.getWriter().print(json);
         }
 
@@ -89,7 +115,7 @@ public class ControladorClienteServlet extends HttpServlet {
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
-      */
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

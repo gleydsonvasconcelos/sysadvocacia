@@ -5,8 +5,13 @@
  */
 package br.edu.ifpe.garanhuns.pos.sysadvogacia.controladores;
 
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Cliente;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Processo;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioAdvogado;
+import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioCliente;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioProcesso;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import java.util.Date;
 
@@ -21,19 +27,76 @@ import java.util.Date;
  *
  * @author Gleydson
  */
-@WebServlet(name = "ControladorProcessoServlet", urlPatterns = {"/SalvarProcesso", "/ListarProcessos", "/RemoverProcesso", "/ListarClientesProcesso"})
+@WebServlet(name = "ControladorProcessoServlet", urlPatterns = {"/SalvarProcesso", "/ListarProcessos",
+    "/RemoverProcesso", "/ListarClientesProcesso", "/AdicionarClienteProcesso",
+    "/ListarAdvogadosProcesso", "/AdicionarAdvogadoProcesso"})
 public class ControladorProcessoServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String userPath = request.getServletPath();
         NegocioProcesso negocioProcesso = new NegocioProcesso();
         Processo processo;
 
         if (userPath.equals("/ListarClientesProcesso")) {
+            
+            String codProcesso = request.getParameter("codigoProcesso");
+            processo = negocioProcesso.processoPorCodigo(Integer.parseInt(codProcesso));
+
+            Gson gson = new GsonBuilder()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return (clazz == Processo.class);
+                        }
+
+                        /**
+                         * Custom field exclusion goes here
+                         */
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return false;
+                        }
+
+                    })
+                    /**
+                     * Use serializeNulls method if you want To serialize null
+                     * values By default, Gson does not serialize null values
+                     */
+                    .serializeNulls()
+                    .create();
+
+            String json = gson.toJson(processo.getClienteList());
+            response.getWriter().print(json);
+        }
+
+        if (userPath.equals("/ListarAdvogadosProcesso")) {
+            
             processo = negocioProcesso.processoPorCodigo(Integer.parseInt(request.getParameter("codigoProcesso")));
-            String json = new Gson().toJson(processo.getClienteList());
+
+
+            Gson gson = new GsonBuilder()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return (clazz == Processo.class);
+                        }
+
+                        /**
+                         * Custom field exclusion goes here
+                         */
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return false;
+                        }
+
+                    })
+                    /**
+                     * Use serializeNulls method if you want To serialize null
+                     * values By default, Gson does not serialize null values
+                     */
+                    .serializeNulls()
+                    .create();
+
+            String json = gson.toJson(processo.getAdvogadoList());
             response.getWriter().print(json);
         }
 
@@ -58,8 +121,8 @@ public class ControladorProcessoServlet extends HttpServlet {
         if (userPath.equals("/SalvarProcesso")) {
             processo = new Processo();
             if (!request.getParameter("codigo").isEmpty()) {
-                processo.setCodigo(Integer.parseInt(request.getParameter("codigo")));
-            }
+                  processo = negocioProcesso.processoPorCodigo(Integer.parseInt(request.getParameter("codigo")));
+            } 
 
             processo.setDataAbertura(new Date(request.getParameter("dataAbertura")));
             processo.setInstanciaAtual(request.getParameter("instanciaAtual"));
@@ -73,7 +136,29 @@ public class ControladorProcessoServlet extends HttpServlet {
         }
 
         if (userPath.equals("/ListarProcessos")) {
-            String json = new Gson().toJson(negocioProcesso.listarProcessos());
+            Gson gson = new GsonBuilder()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return (clazz == Cliente.class);
+                        }
+
+                        /**
+                         * Custom field exclusion goes here
+                         */
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return false;
+                        }
+
+                    })
+                    /**
+                     * Use serializeNulls method if you want To serialize null
+                     * values By default, Gson does not serialize null values
+                     */
+                    .serializeNulls()
+                    .create();
+
+            String json = gson.toJson(negocioProcesso.listarProcessos());
             response.getWriter().print(json);
         }
 
@@ -86,6 +171,35 @@ public class ControladorProcessoServlet extends HttpServlet {
             response.getWriter().print(new Gson().toJson(jsonObject));
         }
 
+        if (userPath.equals("/AdicionarClienteProcesso")) {
+            String codigoProcesso = request.getParameter("codigoProcesso");
+            String codigoCliente = request.getParameter("codigoCliente");
+
+            processo = negocioProcesso.processoPorCodigo(Integer.parseInt(codigoProcesso));
+            processo.getClienteList().add(new NegocioCliente().clientePorCodigo(Integer.parseInt(codigoCliente)));
+
+            negocioProcesso.salvar(processo);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("success", "true");
+            response.getWriter().print(new Gson().toJson(jsonObject));
+
+        }
+        
+        if (userPath.equals("/AdicionarAdvogadoProcesso")) {
+            String codigoProcesso = request.getParameter("codigoProcesso");
+            String codigoAdvogado = request.getParameter("codigoAdvogado");
+
+            processo = negocioProcesso.processoPorCodigo(Integer.parseInt(codigoProcesso));
+            processo.getAdvogadoList().add(new NegocioAdvogado().advogadoPorCodigo(Integer.parseInt(codigoAdvogado)));
+
+            negocioProcesso.salvar(processo);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("success", "true");
+            response.getWriter().print(new Gson().toJson(jsonObject));
+
+        }
+
+        
     }
 
     /**

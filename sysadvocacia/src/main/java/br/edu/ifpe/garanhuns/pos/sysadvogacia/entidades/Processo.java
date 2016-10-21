@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -61,9 +63,15 @@ public class Processo implements Serializable {
     @Size(max = 100)
     @Column(name = "descricao", length = 100)
     private String descricao;
-    @ManyToMany(mappedBy = "processoList")
+    @JoinTable(name = "processo_has_advogado", joinColumns = {
+    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)}, inverseJoinColumns = {
+    @JoinColumn(name = "advogado_codigo", referencedColumnName = "codigo", nullable = false)})
+    @ManyToMany
     private List<Advogado> advogadoList;
-    @ManyToMany(mappedBy = "processoList")
+    @JoinTable(name = "processo_has_cliente", joinColumns = {
+    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)}, inverseJoinColumns = {
+    @JoinColumn(name = "cliente_codigo", referencedColumnName = "codigo", nullable = false)})
+    @ManyToMany
     private List<Cliente> clienteList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "processoCodigo")
     private List<Lei> leiList;

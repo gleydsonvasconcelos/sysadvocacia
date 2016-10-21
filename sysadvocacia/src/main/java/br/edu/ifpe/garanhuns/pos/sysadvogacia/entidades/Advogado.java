@@ -8,6 +8,7 @@ package br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,10 +58,7 @@ public class Advogado implements Serializable {
     @Size(max = 20)
     @Column(name = "telefone", length = 20)
     private String telefone;
-    @JoinTable(name = "processo_has_advogado", joinColumns = {
-        @JoinColumn(name = "advogado_codigo", referencedColumnName = "codigo", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)})
-    @ManyToMany
+    @ManyToMany(mappedBy = "advogadoList", cascade = CascadeType.ALL)
     private List<Processo> processoList;
 
     public Advogado() {
