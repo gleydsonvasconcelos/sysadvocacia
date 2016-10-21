@@ -5,26 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<c:import url="/cabecalho.jsp" />
+<div class="container-page">
 
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>sysadvocacia | Cadastro de Processos</title>
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
-        <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-    </head>
-    <body>
         <h2>Cadastro de Processos</h2>
         <p>Listar, Cadastrar, Alterar e Remover Processos do Sistema</p>
         <table id="dg" title="Processos" class="easyui-datagrid" style="width:800px;height:400px"
@@ -113,8 +101,17 @@
                 </div>
 
                 <div id="tabs-4" title="Histórico">
-                    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-                    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+                    <table id="dgHistorico" title="Histórico" class="easyui-datagrid" style="width:400px;height:400px"
+                           url="ListarHistoricos?"
+                           singleSelect="true">
+                        <thead>
+                            <tr>
+                                <th field="codigo" width="50">Código</th>
+                                <th field="data" width="150">Data</th>
+                                <th field="descricao" width="80" >Descrição</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -140,10 +137,12 @@
             function newUser() {
                 $('#dlg').dialog('open').dialog('setTitle', 'Novo Processo');
                 $('#fm').form('clear');
+                
                 url = 'SalvarProcesso';
             }
             function editUser() {
                 var row = $('#dg').datagrid('getSelected');
+                $('#dgHistorico').attr('url','ListarHistoricos?' + row);
                 if (row) {
                     $('#dlg').dialog('open').dialog('setTitle', 'Alterar Processo');
                     $('#fm').form('load', row);
@@ -214,5 +213,5 @@
                 width:160px;
             }
         </style>
-    </body>
-</html>
+</div>
+<c:import url="/rodape.jsp" />

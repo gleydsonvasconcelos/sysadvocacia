@@ -1,18 +1,21 @@
 <%-- 
-    Document   : clientes
-    Created on : 16/10/2016, 01:40:11
+    Document   : advogados
+    Created on : 16/10/2016, 20:50:11
     Author     : Gleydson
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<c:import url="/cabecalho.jsp" />
+<div class="container-page">
 
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>sysadvocacia | Cadastro de Clientes</title>
+        <title>sysadvocacia | Cadastro de Advogados</title>
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
@@ -20,41 +23,45 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
         <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
     </head>
-    <body>
         <h2>Cadastro de Clientes</h2>
-        <p>Listar, Cadastrar, Alterar e Remover Clientes do Sistema</p>
-        <table id="dg" title="Clientes" class="easyui-datagrid" style="width:800px;height:400px"
-               url="ListarClientes"
+        <p>Listar, Cadastrar, Alterar e Remover Advogados do Sistema</p>
+        <table id="dg" title="Advogados" class="easyui-datagrid" style="width:1000px;height:400px"
+               url="ListarAdvogados"
                toolbar="#toolbar" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">
             <thead>
                 <tr>
                     <th field="codigo" width="50">Código</th>
                     <th field="nome" width="150">Nome</th>
-                    <th field="cpfCnpj" width="80">CPF/CNPJ</th>
-                    <th field="endereco" width="200">Endereço</th>
-                    <th field="telefone" width="100">Telefone</th>
+                    <th field="cpf" width="80">CPF</th>
+                    <th field="oab" width="80">OAB</th>
+                    <th field="endereco" width="100">Endereço</th>
+                    <th field="telefone" width="80">Telefone</th>
                 </tr>
             </thead>
         </table>
         <div id="toolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">Novo Cliente</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Alterar Cliente</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remover Cliente</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">Novo Advogado</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Alterar Advogado</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remover Advogado</a>
         </div>
 
-        <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+        <div id="dlg" class="easyui-dialog" style="width:400px;height:300px;padding:10px 20px"
              closed="true" buttons="#dlg-buttons">
-            <div class="ftitle">Informações do Cliente</div>
-            <form id="fm" method="post"  action="SalvarCliente" novalidate>
+            <div class="ftitle">Informações do Advogado</div>
+            <form id="fm" method="post"  action="SalvarAdvogado" novalidate>
                 <input type="hidden" name="codigo"/>
                 <div class="fitem">
                     <label>Nome:</label>
                     <input name="nome" class="easyui-textbox" required="true">
                 </div>
                 <div class="fitem">
-                    <label>CPF/CNPJ:</label>
-                    <input name="cpfCnpj" class="easyui-textbox" required="true">
+                    <label>CPF:</label>
+                    <input name="cpf" class="easyui-textbox" required="true">
+                </div>
+                <div class="fitem">
+                    <label>OAB:</label>
+                    <input name="oab" class="easyui-textbox" required="true">
                 </div>
                 <div class="fitem">
                     <label>Endereço:</label>
@@ -70,20 +77,20 @@
             <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Salvar</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
         </div>
-        
+
         <script type="text/javascript">
             var url;
             function newUser() {
-                $('#dlg').dialog('open').dialog('setTitle', 'Novo Cliente');
+                $('#dlg').dialog('open').dialog('setTitle', 'Novo Advogado');
                 $('#fm').form('clear');
-                url = 'SalvarCliente';
+                url = 'SalvarAdvogado';
             }
             function editUser() {
                 var row = $('#dg').datagrid('getSelected');
                 if (row) {
-                    $('#dlg').dialog('open').dialog('setTitle', 'Alterar Cliente');
+                    $('#dlg').dialog('open').dialog('setTitle', 'Alterar Advogado');
                     $('#fm').form('load', row);
-                    url = 'SalvarCliente';
+                    url = 'SalvarAdvogado';
                 }
             }
             function saveUser() {
@@ -106,13 +113,13 @@
                     }
                 });
             }
-            
+
             function destroyUser() {
                 var row = $('#dg').datagrid('getSelected');
                 if (row) {
-                    $.messager.confirm('Confirmar', 'Deseja realmente remover este Cliente?', function (r) {
+                    $.messager.confirm('Confirmar', 'Deseja realmente remover este Advogado?', function (r) {
                         if (r) {
-                            $.post('RemoverCliente', {id: row.codigo}, function (result) {
+                            $.post('RemoverAdvogado', {id: row.codigo}, function (result) {
                                 if (result.success) {
                                     $('#dg').datagrid('reload');	// reload the user data
                                 } else {
@@ -121,7 +128,7 @@
                                         msg: result.errorMsg
                                     });
                                 }
-                            },'json');
+                            }, 'json');
                         }
                     });
                 }
@@ -150,5 +157,5 @@
                 width:160px;
             }
         </style>
-    </body>
-</html>
+</div>
+<c:import url="/rodape.jsp" />

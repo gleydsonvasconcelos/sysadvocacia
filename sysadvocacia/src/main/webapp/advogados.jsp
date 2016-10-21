@@ -5,7 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<c:import url="/cabecalho.jsp" />
+<div class="container-page">
 
 
 <!DOCTYPE html>
@@ -20,7 +23,6 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
         <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
     </head>
-    <body>
         <h2>Cadastro de Advogados</h2>
         <p>Listar, Cadastrar, Alterar e Remover Advogados do Sistema</p>
         <table id="dg" title="Advogados" class="easyui-datagrid" style="width:1000px;height:400px"
@@ -155,5 +157,5 @@
                 width:160px;
             }
         </style>
-    </body>
-</html>
+</div>
+<c:import url="/rodape.jsp" />
