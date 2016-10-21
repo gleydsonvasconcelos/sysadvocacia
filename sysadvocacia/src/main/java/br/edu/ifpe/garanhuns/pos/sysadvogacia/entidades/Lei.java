@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,7 +49,7 @@ public class Lei implements Serializable {
     private Integer capitulo;
     @Column(name = "artigo")
     private Integer artigo;
-    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = true)
+    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)
     @ManyToOne(optional = false)
     private Processo processoCodigo;
 
@@ -99,11 +100,11 @@ public class Lei implements Serializable {
     public void setArtigo(Integer artigo) {
         this.artigo = artigo;
     }
-
+    @XmlTransient 
     public Processo getProcessoCodigo() {
         return processoCodigo;
     }
-    @Basic
+    
     public void setProcessoCodigo(Processo processoCodigo) {
         this.processoCodigo = processoCodigo;
     }

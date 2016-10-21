@@ -48,7 +48,7 @@ public class ControladorLeiServlet extends HttpServlet {
         NegocioLei negocioLei = new NegocioLei();
         
         Processo proc = new Processo();
-        proc.setCodigo(1234);
+        proc.setCodigo(1);
                 
         Lei lei;
         
