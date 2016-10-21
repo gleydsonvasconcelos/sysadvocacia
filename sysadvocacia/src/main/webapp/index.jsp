@@ -9,6 +9,7 @@
 <!DOCTYPE html>
 <c:import url="/cabecalho.jsp" />
 <div id="container">
-    
+    <h1>SysAdvocacia</h1>
+    <img src="<c:url value="/imagens/icon-advocacy.png" />" class="img-responsive imagem" alt="Logotipo Advocacia" />
 </div>
 <c:import url="/rodape.jsp" />
