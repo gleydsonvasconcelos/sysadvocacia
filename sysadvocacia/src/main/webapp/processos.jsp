@@ -8,6 +8,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
+<c:import url="/cabecalho.jsp" />
+<div class="container-page">
 
 
 <!DOCTYPE html>
@@ -150,8 +152,17 @@
                     <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
                 </div>
                 <div id="tabs-4" title="Histórico">
-                    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-                    <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+                    <table id="dgHistorico" title="Histórico" class="easyui-datagrid" style="width:400px;height:400px"
+                           url="ListarHistoricos?"
+                           singleSelect="true">
+                        <thead>
+                            <tr>
+                                <th field="codigo" width="50">Código</th>
+                                <th field="data" width="150">Data</th>
+                                <th field="descricao" width="80" >Descrição</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
@@ -175,6 +186,7 @@
             function newUser() {
                 $('#dlg').dialog('open').dialog('setTitle', 'Novo Processo');
                 $('#fm').form('clear');
+                
                 url = 'SalvarProcesso';
             }
 
@@ -192,6 +204,7 @@
                 $('#dgClientes').datagrid('reload');
                 $('#dgAdvogados').datagrid('reload');
                 
+                $('#dgHistorico').attr('url','ListarHistoricos?' + row);
                 if (row) {
                     $('#dlg').dialog('open').dialog('setTitle', 'Alterar Processo');
                     $('#fm').form('load', row);
@@ -298,5 +311,5 @@
                 width:160px;
             }
         </style>
-    </body>
-</html>
+</div>
+<c:import url="/rodape.jsp" />

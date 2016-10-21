@@ -1,23 +1,21 @@
 <%-- 
     Document   : lei
     Created on : 19/10/2016, 09:59:53
-    Author     : ewerto
---%>
-<%-- 
-    Document   : clientes
-    Created on : 16/10/2016, 01:40:11
-    Author     : Gleydson
+    Author     : Ewerton
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<c:import url="/cabecalho.jsp" />
+<div class="container-page">
 
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>sysadvocacia | Cadastro de Clientes</title>
+        <title>sysadvocacia | Cadastro de Leis</title>
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
         <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
@@ -29,7 +27,7 @@
         <h2>Cadastro de Leis</h2>
         <p>Listar, Cadastrar, Alterar e Remover Leis do Sistema</p>
         <table id="dg" title="Clientes" class="easyui-datagrid" style="width:800px;height:400px"
-               url="ListarClientes"
+               url="ListarLeis"
                toolbar="#toolbar" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">
             <thead>
@@ -52,7 +50,7 @@
         <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
              closed="true" buttons="#dlg-buttons">
             <div class="ftitle">Informações da Lei</div>
-            <form id="fm" method="post"  action="SalvarCliente" novalidate>
+            <form id="fm" method="post"  action="SalvarLei" novalidate>
                 <input type="hidden" name="codigo"/>
                 <div class="fitem">
                     <label>Descrição</label>
@@ -68,7 +66,7 @@
                 </div>
                 <div class="fitem">
                     <label>Capitulo</label>
-                    <input name="telefone" class="easyui-textbox" >
+                    <input name="capitulo" class="easyui-textbox" >
                 </div>
             </form>
         </div>
@@ -156,5 +154,5 @@
                 width:160px;
             }
         </style>
-    </body>
-</html>
+</div>
+<c:import url="/rodape.jsp" />
