@@ -13,22 +13,6 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>sysadvocacia | Cadastro de Processos</title>
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
-        
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
-
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
-        <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-    </head>
-    <body>
         <h2>Cadastro de Processos</h2>
         <p>Listar, Cadastrar, Alterar e Remover Processos do Sistema</p>
         <table id="dg" title="Processos" class="easyui-datagrid" style="width:800px;height:400px"
