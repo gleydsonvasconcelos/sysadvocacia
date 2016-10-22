@@ -8,7 +8,6 @@ package br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Lei;
 import br.edu.ifpe.garanhuns.pos.sysadvogacia.entidades.Processo;
 import br.edu.ifpe.pos.garanhuns.sysadvogacia.persistencia.LeiDAO;
-import br.edu.ifpe.pos.garanhuns.sysadvogacia.persistencia.ProcessoDAO;
 import java.util.List;
 
 /**

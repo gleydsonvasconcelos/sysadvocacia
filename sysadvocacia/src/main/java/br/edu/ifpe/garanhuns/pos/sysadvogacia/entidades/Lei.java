@@ -49,8 +49,8 @@ public class Lei implements Serializable {
     private Integer capitulo;
     @Column(name = "artigo")
     private Integer artigo;
-    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo", nullable = false)
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "processo_codigo", referencedColumnName = "codigo")
+    @ManyToOne
     private Processo processoCodigo;
 
     public Lei() {

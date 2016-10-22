@@ -60,6 +60,13 @@ public class ControladorAdvogadoServlet extends HttpServlet {
             advogado.setEndereco(request.getParameter("endereco"));
             advogado.setTelefone(request.getParameter("telefone"));
 
+            String json = new Gson().toJson(negocioAdvogado.salvar(advogado));
+            response.getWriter().print(json);
+
+        }
+
+        if (userPath.equals("/ListarAdvogados")) {
+
             Gson gson = new GsonBuilder()
                     .setExclusionStrategies(new ExclusionStrategy() {
 
@@ -82,15 +89,7 @@ public class ControladorAdvogadoServlet extends HttpServlet {
                     .serializeNulls()
                     .create();
 
-            
-            
-            String json = gson.toJson(negocioAdvogado.salvar(advogado));
-            response.getWriter().print(json);
-
-        }
-
-        if (userPath.equals("/ListarAdvogados")) {
-            String json = new Gson().toJson(negocioAdvogado.listarAdvogados());
+            String json = gson.toJson(negocioAdvogado.listarAdvogados());
             response.getWriter().print(json);
         }
 

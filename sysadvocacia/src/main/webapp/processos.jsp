@@ -13,23 +13,6 @@
 
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>sysadvocacia | Cadastro de Processos</title>
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/color.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
-        <script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-    </head>
-    <body>
-
         <jsp:useBean id="clientes" class="br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioCliente"/>
         <jsp:useBean id="advogados" class="br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioAdvogado"/>
 
@@ -153,8 +136,7 @@
                 </div>
                 <div id="tabs-4" title="Histórico">
                     <table id="dgHistorico" title="Histórico" class="easyui-datagrid" style="width:400px;height:400px"
-                           url="ListarHistoricos?"
-                           singleSelect="true">
+                           method="get" singleSelect="true">
                         <thead>
                             <tr>
                                 <th field="codigo" width="50">Código</th>
@@ -204,7 +186,8 @@
                 $('#dgClientes').datagrid('reload');
                 $('#dgAdvogados').datagrid('reload');
                 
-                $('#dgHistorico').attr('url','ListarHistoricos?' + row);
+                $('#dgHistorico').attr('url','ListarHistoricosProcesso?codigoProcesso' + row);
+                
                 if (row) {
                     $('#dlg').dialog('open').dialog('setTitle', 'Alterar Processo');
                     $('#fm').form('load', row);

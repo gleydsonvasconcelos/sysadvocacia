@@ -11,7 +11,6 @@ import br.edu.ifpe.garanhuns.pos.sysadvogacia.negocio.NegocioLei;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,9 +58,8 @@ public class ControladorLeiServlet extends HttpServlet {
             
             if (!request.getParameter("codigo").isEmpty()) {
                 lei.setCodigo(Integer.parseInt(request.getParameter("codigo")));
-            } else {                
-                lei.setCodigo(0);           
-            }
+            } 
+            
             lei.setArtigo(Integer.parseInt(request.getParameter("artigo"))); 
             lei.setDescricao(request.getParameter("descricao"));
             lei.setTipo(request.getParameter("tipo"));                      
